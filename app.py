@@ -24,24 +24,65 @@ def index():
 @app.route('/quiz/<quiz_name>')
 def quiz(quiz_name):
     """Load and display a quiz."""
+    return redirect(url_for('quiz_config', quiz_name=quiz_name))
+
+@app.route('/quiz/<quiz_name>/config', methods=['GET', 'POST'])
+def quiz_config(quiz_name):
+    """Configure the quiz settings before starting."""
     quiz_path = os.path.join(quizzes_dir, quiz_name)
     
     try:
+        # Parse the quiz file
         quiz_data = parse_quiz_file(quiz_path)
-        session['current_quiz'] = quiz_data
-        session['quiz_name'] = quiz_name
-        session['current_question'] = 0
-        session['answers'] = []
+        total_questions = len(quiz_data['questions'])
         
-        return render_template('quiz.html', 
+        if request.method == 'POST':
+            # Get the number of questions from the form
+            num_questions = int(request.form.get('num_questions', total_questions))
+            
+            # Make sure it's valid
+            if num_questions <= 0 or num_questions > total_questions:
+                num_questions = total_questions
+            
+            # Randomly select questions if fewer than total are requested
+            if num_questions < total_questions:
+                import random
+                selected_indices = random.sample(range(total_questions), num_questions)
+                selected_questions = [quiz_data['questions'][i] for i in selected_indices]
+                quiz_data['questions'] = selected_questions
+            
+            # Store quiz data in session
+            session['current_quiz'] = quiz_data
+            session['quiz_name'] = quiz_name
+            session['current_question'] = 0
+            session['answers'] = []
+            
+            # Start the quiz
+            return redirect(url_for('start_quiz'))
+        
+        # Show the configuration form
+        return render_template('quiz_config.html', 
                               quiz_name=quiz_name,
-                              quiz_data=quiz_data,
-                              current_question=0)
+                              total_questions=total_questions)
     except Exception as e:
-        logging.error(f"Error loading quiz {quiz_name}: {str(e)}")
+        logging.error(f"Error configuring quiz {quiz_name}: {str(e)}")
         return render_template('index.html', 
                               quizzes=list_quiz_files(quizzes_dir),
-                              error=f"Error loading quiz: {str(e)}")
+                              error=f"Error configuring quiz: {str(e)}")
+
+@app.route('/start_quiz')
+def start_quiz():
+    """Start the quiz with the configured settings."""
+    if 'current_quiz' not in session:
+        return redirect(url_for('index'))
+    
+    quiz_data = session['current_quiz']
+    quiz_name = session['quiz_name']
+    
+    return render_template('quiz.html', 
+                          quiz_name=quiz_name,
+                          quiz_data=quiz_data,
+                          current_question=0)
 
 @app.route('/submit_answer', methods=['POST'])
 def submit_answer():
