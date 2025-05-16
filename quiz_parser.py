@@ -57,10 +57,10 @@ def parse_quiz_file(file_path):
                         'text': option_match.group(2)
                     })
                 
-                # Check if line specifies the correct answer - supporting more than just A-D
-                answer_match = re.match(r'^Answer:\s*([A-Z])$', line)
+                # Check if line specifies the correct answer - supporting both "Answer" and "Raspunsul"
+                answer_match = re.match(r'^(Answer|Raspunsul):\s*([A-Z])$', line)
                 if answer_match:
-                    correct_answer = answer_match.group(1)
+                    correct_answer = answer_match.group(2)
             
             # Add question to the quiz only if it has options and a correct answer
             if options and correct_answer:
