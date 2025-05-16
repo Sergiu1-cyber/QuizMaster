@@ -27,7 +27,7 @@ def parse_quiz_file(file_path):
             content = file.read()
         
         # Split content into questions
-        # Format: Question followed by options (A-D) and correct answer
+        # Format: Question followed by options (A-Z) and correct answer
         question_blocks = re.split(r'\n\s*\n', content.strip())
         
         quiz_data = {
@@ -49,16 +49,16 @@ def parse_quiz_file(file_path):
                 if not line:
                     continue
                 
-                # Check if line is an option (A, B, C, D)
-                option_match = re.match(r'^([A-D])\)\s*(.+)$', line)
+                # Check if line is an option (A-Z) - supporting more than just A-D
+                option_match = re.match(r'^([A-Z])\)\s*(.+)$', line)
                 if option_match:
                     options.append({
                         'id': option_match.group(1),
                         'text': option_match.group(2)
                     })
                 
-                # Check if line specifies the correct answer
-                answer_match = re.match(r'^Answer:\s*([A-D])$', line)
+                # Check if line specifies the correct answer - supporting more than just A-D
+                answer_match = re.match(r'^Answer:\s*([A-Z])$', line)
                 if answer_match:
                     correct_answer = answer_match.group(1)
             
