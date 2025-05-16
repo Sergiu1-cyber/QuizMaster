@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+
+{% block title %}Available Quizzes{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card border-0 bg-dark shadow">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h3 mb-0">
+                    <i class="fas fa-list-check me-2"></i>
+                    Available Quizzes
+                </h1>
+            </div>
+            <div class="card-body">
+                {% if error %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endif %}
+
+                {% if quizzes %}
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    {% for quiz in quizzes %}
+                    <div class="col">
+                        <div class="card h-100 quiz-card">
+                            <div class="card-body">
+                                <h5 class="card-title">
+                                    <i class="fas fa-file-alt me-2"></i>
+                                    {{ quiz.replace('.txt', '') }}
+                                </h5>
+                                <p class="card-text text-muted">
+                                    Test your knowledge with this quiz.
+                                </p>
+                            </div>
+                            <div class="card-footer bg-transparent border-0">
+                                <a href="{{ url_for('quiz', quiz_name=quiz) }}" class="btn btn-primary w-100">
+                                    <i class="fas fa-play me-2"></i>
+                                    Start Quiz
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    No quiz files found in the quizzes directory. Please add some quiz files to get started.
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header">
+                        How to Create a Quiz
+                    </div>
+                    <div class="card-body">
+                        <p>Create a text file in the "quizzes" directory with the following format:</p>
+                        <pre class="bg-dark p-3 rounded">
+What is the capital of France?
+A) London
+B) Berlin
+C) Paris
+D) Madrid
+Answer: C
+
+What is 2 + 2?
+A) 3
+B) 4
+C) 5
+D) 6
+Answer: B
+                        </pre>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

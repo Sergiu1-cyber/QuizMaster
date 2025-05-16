@@ -1,0 +1,34 @@
+What is the capital of France?
+A) London
+B) Berlin
+C) Paris
+D) Madrid
+Answer: C
+
+What is the largest planet in our solar system?
+A) Earth
+B) Mars
+C) Venus
+D) Jupiter
+Answer: D
+
+Which of these is not a programming language?
+A) Java
+B) Python
+C) Oracle
+D) Ruby
+Answer: C
+
+What is 2 + 2?
+A) 3
+B) 4
+C) 5
+D) 6
+Answer: B
+
+Who painted the Mona Lisa?
+A) Vincent van Gogh
+B) Pablo Picasso
+C) Leonardo da Vinci
+D) Michelangelo
+Answer: C

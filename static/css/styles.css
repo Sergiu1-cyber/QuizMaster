@@ -1,0 +1,61 @@
+/* Custom styles for quiz app */
+.quiz-card {
+    transition: transform 0.3s ease;
+}
+
+.quiz-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.option-label {
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background-color: var(--bs-dark);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.option-label:hover {
+    background-color: var(--bs-secondary);
+}
+
+.option-input:checked + .option-label {
+    background-color: var(--bs-primary);
+    color: white;
+}
+
+.option-input {
+    display: none;
+}
+
+.question-container {
+    min-height: 300px;
+}
+
+.correct-answer {
+    background-color: var(--bs-success) !important;
+}
+
+.incorrect-answer {
+    background-color: var(--bs-danger) !important;
+}
+
+.result-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: var(--bs-dark);
+}
+
+.score-display {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.progress-quiz {
+    height: 8px;
+    margin-bottom: 20px;
+}

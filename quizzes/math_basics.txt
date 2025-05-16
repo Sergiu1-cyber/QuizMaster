@@ -1,0 +1,41 @@
+What is the result of 5 * 7?
+A) 30
+B) 35
+C) 40
+D) 45
+Answer: B
+
+What is the square root of 64?
+A) 6
+B) 7
+C) 8
+D) 9
+Answer: C
+
+Solve for x: 2x + 5 = 13
+A) x = 4
+B) x = 5
+C) x = 6
+D) x = 8
+Answer: A
+
+Which of these is a prime number?
+A) 15
+B) 21
+C) 27
+D) 29
+Answer: D
+
+What is the result of 3² + 4²?
+A) 7
+B) 25
+C) 49
+D) 64
+Answer: B
+
+What is 1/4 as a decimal?
+A) 0.25
+B) 0.4
+C) 0.5
+D) 0.75
+Answer: A

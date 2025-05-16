@@ -1,0 +1,68 @@
+{% extends 'layout.html' %}
+
+{% block title %}{{ quiz_name.replace('.txt', '') }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow bg-dark border-0">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h1 class="h3 mb-0">{{ quiz_name.replace('.txt', '') }}</h1>
+                    <div>
+                        <span class="badge bg-secondary" id="quiz-timer">0:00</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="progress progress-quiz">
+                    <div class="progress-bar" role="progressbar" 
+                         style="width: {{ (current_question / quiz_data.questions|length) * 100 }}%"
+                         aria-valuenow="{{ current_question }}" 
+                         aria-valuemin="0" 
+                         aria-valuemax="{{ quiz_data.questions|length }}"></div>
+                </div>
+                
+                <p class="text-muted">Question {{ current_question + 1 }} of {{ quiz_data.questions|length }}</p>
+                
+                <div class="question-container">
+                    <h3 class="mb-4">{{ quiz_data.questions[current_question].question }}</h3>
+                    
+                    <form method="POST" action="{{ url_for('submit_answer') }}" class="needs-validation" novalidate>
+                        <div class="options-list">
+                            {% for option in quiz_data.questions[current_question].options %}
+                            <div class="option mb-3">
+                                <input type="radio" 
+                                       name="answer" 
+                                       id="option{{ option.id }}" 
+                                       value="{{ option.id }}" 
+                                       class="option-input"
+                                       required>
+                                <label for="option{{ option.id }}" class="option-label">
+                                    <span class="fw-bold">{{ option.id }})</span> {{ option.text }}
+                                </label>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="{{ url_for('index') }}" class="btn btn-secondary">
+                                <i class="fas fa-times me-2"></i>
+                                Quit Quiz
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-arrow-right me-2"></i>
+                                {% if current_question + 1 == quiz_data.questions|length %}
+                                    Finish Quiz
+                                {% else %}
+                                    Next Question
+                                {% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
